@@ -10,9 +10,12 @@ const setItem = (key,value) => {
   AsyncStorage.setItem(key,value) ;
 }
 
-
+const removeItem = (key) => {
+  AsyncStorage.removeItem(key) ;
+}
 
 export {
   getItem ,
-  setItem , 
+  setItem ,
+  removeItem
 }

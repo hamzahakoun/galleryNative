@@ -1,7 +1,5 @@
-import AllImagesGrid  from './allImagesGrid' ;
-import LikedImagesGrid  from './likedImagesGrid' ;
+import ImagesGrid  from './imagesGrid' ;
 
 export {
-  AllImagesGrid,
-  LikedImagesGrid
+  ImagesGrid ,
 }

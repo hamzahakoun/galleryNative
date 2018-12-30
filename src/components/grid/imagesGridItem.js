@@ -1,12 +1,16 @@
 import React from 'react' ;
 import { View,StyleSheet,Image,TouchableOpacity } from 'react-native' ;
+import { connect } from 'react-redux' ;
+import { removeData } from '../../store/actions/imagesActions' ;
 
 
-
-const ImagesGridItem = ({item}) => {
+const ImagesGridItem = ({item,rootNavigator,removeData}) => {
   return (
-    <TouchableOpacity style = {styles.container}>
-      <Image source = {{uri : item.url}} style = {styles.img}/>
+    <TouchableOpacity style = {styles.container} onPress = {() => {
+        removeData('REMOVE_RELATED') ;
+        rootNavigator.navigate('Details',{data : item}) ;
+      }}>
+      <Image source = {{uri : item.thumbnail}} style = {styles.img}/>
     </TouchableOpacity>
   )
 }
@@ -27,4 +31,19 @@ const styles = StyleSheet.create({
   }
 })
 
-export default ImagesGridItem ;
+const mapDispatchToProps = (dispatch) => {
+  return {
+    removeData : (type) => dispatch(removeData(type)) ,
+  }
+}
+
+
+const mapStoreToProps = (state) => {
+  return {
+    rootNavigator : state.route.rootNavigator ,
+  }
+}
+
+
+
+export default connect(mapStoreToProps,mapDispatchToProps)(ImagesGridItem) ;

@@ -27,5 +27,5 @@ const updateData = (type,data) => {
 export {
   getData ,
   removeData,
-  updateData, 
+  updateData,
 }

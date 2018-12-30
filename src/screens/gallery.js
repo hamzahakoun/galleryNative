@@ -1,19 +1,20 @@
 import React , { Component } from 'react' ;
 import { View , StyleSheet, Text } from 'react-native' ;
 import { createMaterialTopTabNavigator,createAppContainer } from 'react-navigation' ;
-import { AllImagesGrid,LikedImagesGrid } from '../components/grid' ;
+import { ImagesGrid} from '../components/grid' ;
 
 
 const screens = {
-  'All' : (props) => <AllImagesGrid type = 'ALL' endpoint = 'images' {...props}/>,
-  'Liked' : (props) => <LikedImagesGrid {...props}/>,
+  'All' : (props) => <ImagesGrid type = 'ALL' endpoint = 'images' {...props}/>,
+  'Liked' : (props) => <ImagesGrid type = 'LIKED' endpoint = 'images?liked=1'{...props}/>,
 }
 
 
 const tabOptions = {
+  lazy: true,
   tabBarOptions : {
     tabStyle : {
-      backgroundColor : '#B53471' ,
+      backgroundColor : '#C62828' ,
     },
     indicatorStyle : {
       color : "yellow",

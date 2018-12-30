@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import { Text, View } from 'react-native';
-import { LoginScreen,HomeScreen } from './src/screens' ;
+import { LoginScreen,HomeScreen,DetailsScreen } from './src/screens' ;
 import { createStackNavigator, createAppContainer } from 'react-navigation' ;
 import { PrivateRoute } from './src/components/utils' ;
 import { request } from './src/utils/http';
@@ -18,6 +18,16 @@ const screens = {
     screen : LoginScreen ,
     navigationOptions : {header : null}
   } ,
+  "Details" : {
+    screen : DetailsScreen ,
+    navigationOptions : {
+      title : "Details" ,
+      headerTintColor : "#fff" ,
+      headerStyle : {
+        backgroundColor : '#C62828' ,
+      }
+    }
+  }
 }
 
 
@@ -28,9 +38,12 @@ class App extends Component<Props> {
 
   verifyToken = (token) => {
     request('verify-token/',{token}).then(resp => {
-      this.props.update('UPDATE_AUTHORIZATION',true)
+      if (resp.status === 200) {
+        this.props.update('UPDATE_AUTHORIZATION',true)
+      }
+
       this.setState({ status : resp.status })
-    })
+    }).catch(e => this.setState({ status : 400}))
   }
 
   componentDidMount = () => {

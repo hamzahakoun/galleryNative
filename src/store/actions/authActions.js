@@ -1,5 +1,5 @@
 import { request } from '../../utils/http' ;
-import { setItem } from '../../utils/storage' ;
+import { setItem,removeItem } from '../../utils/storage' ;
 
 const login = (creds,navigation) => {
   return (dispatch,prevState) => {
@@ -15,6 +15,14 @@ const login = (creds,navigation) => {
   }
 }
 
+
+const logout = (navigation) => {
+  return (dispatch,prevState) => {
+    dispatch({type : "LOGOUT"})
+    removeItem('token') ; 
+    navigation.navigate('Login') ;
+  }
+}
 const update = (type,data) => {
   return (dispatch,prevState) => {
     dispatch({ type , data }) ;
@@ -24,5 +32,6 @@ const update = (type,data) => {
 
 export {
   login ,
+  logout ,
   update ,
 }
