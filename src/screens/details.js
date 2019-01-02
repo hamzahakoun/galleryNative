@@ -5,8 +5,9 @@ import { connect } from 'react-redux' ;
 import { getRequest } from '../utils/http' ;
 import { updateData } from '../store/actions/imagesActions' ;
 import { Card,Button } from 'native-base' ;
-import { TagsList } from '../components/details' ;
+import { TagsList,ActiveBar } from '../components/details' ;
 import { CommentsList } from '../components/comments' ;
+
 
 const { width , height } = Dimensions.get('window') ;
 
@@ -36,13 +37,17 @@ class DetailsScreen extends Component {
      const ratio =  width / this.state.data.width ;
      const newHeight = this.state.data.height * ratio ;
      this.state.data.tags.map(item => tagsString += `${item.content},`) ;
+     const actions = [
+       {iconName : 'heart'},
+       {iconName : 'times',color : "#c0392b"},
+       {iconName : 'tags',color : '#1abc9c'},
+       {iconName : 'trash',color : '#8e44ad'},
 
+
+     ]
      return (
        <View style = {styles.container}>
          <ScrollView>
-
-           <Card style = {styles.card}>
-
 
              <View style = {[styles.imageBlock,{width : width, height: newHeight}]}>
                <Image
@@ -51,10 +56,11 @@ class DetailsScreen extends Component {
                  />
              </View>
 
-              <View style = {styles.tags}>
-                <TagsList data = {this.state.data.tags} />
-              </View>
-           </Card>
+            <ActiveBar actions = {actions} />
+            <View style = {styles.tags}>
+              <TagsList data = {this.state.data.tags} />
+            </View>
+
 
             <Text style = {styles.title}>Comments </Text>
            <View style = {styles.comments}>
@@ -97,7 +103,8 @@ const styles = StyleSheet.create({
     paddingHorizontal : 5 ,
     paddingVertical : 10 ,
     flex : 1 ,
-
+    borderBottomWidth : 1 ,
+    borderBottomColor : "#ccc" ,
   },
   comments : {
     paddingHorizontal : 20 ,

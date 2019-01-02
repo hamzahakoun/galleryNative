@@ -6,7 +6,7 @@ import { getData } from '../store/actions/tagsActions' ;
 import { Card,Button,Fab,Container, Content } from 'native-base' ;
 import Icon from 'react-native-vector-icons/FontAwesome' ;
 import { TagCardLoading,TagsCard } from '../components/tags' ;
-
+ 
 
 const { width , height } = Dimensions.get('window') ;
 const MAX_HEADER_HEIGHT = Math.floor(height / 2) ;

@@ -5,6 +5,7 @@ const login = (creds,navigation) => {
   return (dispatch,prevState) => {
     request('api-token-auth/',creds)
     .then(resp => {
+
       if (resp.data.token) {
         setItem("token",resp.data.token) ;
         dispatch({type : 'LOGIN'})
@@ -19,7 +20,7 @@ const login = (creds,navigation) => {
 const logout = (navigation) => {
   return (dispatch,prevState) => {
     dispatch({type : "LOGOUT"})
-    removeItem('token') ; 
+    removeItem('token') ;
     navigation.navigate('Login') ;
   }
 }
