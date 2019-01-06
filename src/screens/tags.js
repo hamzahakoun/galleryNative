@@ -1,17 +1,27 @@
 import React, { Component } from 'react' ;
-import { View, StyleSheet,Text,ScrollView,Animated,Dimensions } from 'react-native' ;
 import { connect } from 'react-redux' ;
 import { getRequest } from '../utils/http' ;
-import { getData } from '../store/actions/tagsActions' ;
-import { Card,Button,Fab,Container, Content } from 'native-base' ;
+import { getData,updateData } from '../store/actions/rootActions' ;
+import { Card,Button } from 'native-base' ;
 import Icon from 'react-native-vector-icons/FontAwesome' ;
 import { TagCardLoading,TagsCard } from '../components/tags' ;
+import { Fabs } from '../components/utils' ;
+import {
+  View,
+  StyleSheet,
+  Text,
+  ScrollView,
+  Animated,
+  Dimensions
+} from 'react-native' ;
+
 
 
 const { width , height } = Dimensions.get('window') ;
 const MAX_HEADER_HEIGHT = Math.floor(height / 2) ;
 const MIN_HEADER_HEIGHT = 50 ;
 const demo = [1,2,3,4,5,6,7,8,9,10] ;
+
 
 
 class TagsScreen extends Component {
@@ -21,7 +31,8 @@ class TagsScreen extends Component {
     tags : this.props.tags ,
     readyData : null ,
     checkedTags : [],
-    fabActive : false ,
+    active : true ,
+
   }
 
   componentDidMount = () => {
@@ -29,6 +40,18 @@ class TagsScreen extends Component {
       this.props.getData('images/tags?exists=1','TAGS') ;
     }
   }
+
+  checkAll = () => this.setState({checkedTags : this.state.tags}) ;
+
+  removeAll = () => this.setState({checkedTags : []}) ;
+
+  search = () => {
+    if (this.state.checkedTags) {
+      this.props.updateData('SEARCHED_TAGS',this.state.checkedTags) ;
+      this.props.navigation.navigate('Gallery') ;
+    }
+  }
+
 
   toggleCheck = (item) => {
 
@@ -71,6 +94,13 @@ class TagsScreen extends Component {
 
   render = () => {
 
+
+    const fabs = [
+      {buttonColor : "#801336",title : 'Search',action : this.search ,icon: "search",iconColor : '#fff'} ,
+      {buttonColor : "#582841",title : 'Remove All',action : this.removeAll ,icon: "times",iconColor : '#fff'} ,
+      {buttonColor : "#CC2A49",title : 'Check All',action : this.checkAll ,icon: "check-square",iconColor : '#fff'} ,
+    ]
+
      const headerHeight = this.state.scrollY.interpolate({
        inputRange : [0,180,181] ,
        outputRange : [MAX_HEADER_HEIGHT,MIN_HEADER_HEIGHT,MIN_HEADER_HEIGHT] ,
@@ -100,7 +130,6 @@ class TagsScreen extends Component {
 
      return (
        <View style = {styles.container}>
-
         <Animated.ScrollView style = {[styles.body,{paddingTop : bodyPaddingTop}]}
           scrollEventThrottle = {16}
           onScroll = {
@@ -168,6 +197,7 @@ class TagsScreen extends Component {
           </Animated.View>
         </Animated.View>
 
+        <Fabs fabs = {fabs} />
 
        </View>
      )
@@ -206,6 +236,7 @@ const styles = StyleSheet.create({
   },
   body : {
     paddingHorizontal : 20 ,
+    paddingBottom : 50,
   },
   tagCardLoadingContainer : {
     marginBottom : 10 ,
@@ -214,12 +245,17 @@ const styles = StyleSheet.create({
     borderRadius : 6 ,
     padding : 20 ,
     backgroundColor : "#rgba(255,255,255,0.9)",
+  },
+  actionButtonIcon : {
+    color : "#fff",
   }
+
 })
 
 const mapStoreToProps = (state) => {
   return {
     tags : state.tags.tags ,
+    searchedTags : state.tags.searchedTags ,
   }
 }
 
@@ -227,6 +263,7 @@ const mapStoreToProps = (state) => {
 const mapDispatchToProps  = (dispatch) => {
   return {
     getData : (type,data) => dispatch(getData(type,data)) ,
+    updateData : (type,data) => dispatch(updateData(type,data)) ,
   }
 }
 

@@ -35,7 +35,7 @@ class ActionBarItem extends Component {
   }
 
   componentDidMount = () => {
-    this.scaleUp() ;
+    //this.scaleUp() ;
   }
 
   render = () => {

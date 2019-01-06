@@ -9,22 +9,35 @@ class ImagesGrid  extends Component {
 
   state = {
     data : this.props[this.props.type.toLowerCase()] ,
-    type : this.props.type ,
+    type : this.props.type , // all , realated , searched, liked
+    endpoint : this.props.endpoint ,
   }
 
   componentDidMount = () => {
     if (!this.state.data) {
-      this.props.getData(this.props.endpoint,this.props.type) ;
+      this.props.getData(this.state.endpoint,this.state.type) ;
     }
   }
 
   static getDerivedStateFromProps = (nextProps,prevState) => {
     return {
       type : nextProps.type,
-      data : nextProps[nextProps.type.toLowerCase()]}
+      data : nextProps[nextProps.type.toLowerCase()] ,
+      endpoint : nextProps.endpoint ,
+    }
+  }
+
+  componentDidUpdate = (prevProps,prevState) => {
+
+    if (prevState.type !== 'SEARCHED' && this.props.searched) {
+      this.setState({type : "SEARCHED"}) ;
+    }
+    if (this.state.type === 'SEARCHED') {
+      console.log('done ')
     }
 
 
+  }
 
   render = () => {
 
@@ -57,7 +70,9 @@ const mapStoreToProps = (state) => {
     all : state.images.all ,
     related : state.images.related ,
     liked : state.images.liked,
-  }
+    searched : state.images.searched ,
+    searchedTags  :state.tags.searchedTags ,
+ }
 }
 
 

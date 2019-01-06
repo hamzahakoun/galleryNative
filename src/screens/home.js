@@ -65,6 +65,7 @@ const styles = StyleSheet.create({
 
 
 
+
 const mapDispatchToProps  = (dispatch) => {
   return {
     setNavigator : (nav,type) => dispatch(setNavigator(nav,type)) ,

@@ -3,7 +3,6 @@ import { View , StyleSheet, Text } from 'react-native' ;
 import { createMaterialTopTabNavigator,createAppContainer } from 'react-navigation' ;
 import { ImagesGrid} from '../components/grid' ;
 
-
 const screens = {
   'All' : (props) => <ImagesGrid type = 'ALL' endpoint = 'images' {...props}/>,
   'Liked' : (props) => <ImagesGrid type = 'LIKED' endpoint = 'images?liked=1'{...props}/>,
@@ -19,24 +18,19 @@ const tabOptions = {
     indicatorStyle : {
       color : "yellow",
     }
-
   }
-
-
 }
 
 const TabNavigator = createMaterialTopTabNavigator(screens,tabOptions) ;
-
 
 class GalleryScreen extends Component {
 
 
   render = () => {
-
     const AppContainer = createAppContainer(TabNavigator) ;
     return (
       <View style =  {styles.container}>
-        <AppContainer />
+          <AppContainer />
       </View>
     )
   }
@@ -47,5 +41,9 @@ const styles = StyleSheet.create({
     flex : 1 ,
   }
 })
+
+
+
+
 
 export default GalleryScreen ;

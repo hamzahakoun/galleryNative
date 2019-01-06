@@ -19,8 +19,6 @@ const CommentsListItem = ({data}) => {
 const styles = StyleSheet.create({
   container : {
     flex : 1 ,
-    flexDirection : 'row' ,
-    alignItems:'center' ,
     padding : 30,
     backgroundColor : "#f1f2f6",
     margin : 5 ,
@@ -29,15 +27,18 @@ const styles = StyleSheet.create({
 
   },
   avatar : {
+    //marginTop : 5 ,
     flex : 2 ,
-    alignItems : 'center' ,
+    //alignItems : 'center' ,
     justifyContent :'center' ,
 
   },
   comment : {
     flex : 5 ,
-    alignItems : 'flex-end' ,
-    
+    paddingVertical : 5 ,
+    paddingLeft : 30 ,
+    //alignItems : 'flex' ,
+
   },
   commentContent : {
     fontWeight : 'bold' ,
